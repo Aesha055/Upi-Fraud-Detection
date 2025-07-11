@@ -1,0 +1,40 @@
+import React, { useState } from 'react';
+import axios from 'axios';
+
+function App() {
+  const [flightCode, setFlightCode] = useState('');
+  const [flightData, setFlightData] = useState(null);
+
+  const handleSearch = async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/track?flight=${flightCode}`);
+      setFlightData(response.data);
+    } catch (error) {
+      console.error("Error fetching flight data", error);
+      setFlightData(null);
+    }
+  };
+
+  return (
+    <div style={{ padding: '2rem', fontFamily: 'Arial' }}>
+      <h2>✈️ Flight Tracker</h2>
+      <input
+        type="text"
+        placeholder="Enter flight number (e.g. AI302)"
+        value={flightCode}
+        onChange={(e) => setFlightCode(e.target.value)}
+        style={{ padding: '0.5rem', marginRight: '0.5rem' }}
+      />
+      <button onClick={handleSearch}>Track Flight</button>
+
+      {flightData && (
+        <div style={{ marginTop: '2rem' }}>
+          <h3>Flight Details:</h3>
+          <pre>{JSON.stringify(flightData, null, 2)}</pre>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default App;
