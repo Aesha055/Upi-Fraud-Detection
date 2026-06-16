@@ -1,0 +1,8 @@
+streamlit
+pandas
+numpy
+Random forest classifier model
+scikit-learn
+imbalanced-learn
+matplotlib
+openpyxl
